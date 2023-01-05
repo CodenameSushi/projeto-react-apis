@@ -1,10 +1,13 @@
-
+import Router from "./routes/Router";
+import { ChakraProvider } from "@chakra-ui/react";
+import { GlobalStyle } from "./GlobalStyles";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Pokedex Project</h1>
-    </div>
+    <ChakraProvider>
+      <GlobalStyle/>
+      <Router/>
+      </ChakraProvider>
   );
 }
 
