@@ -1,18 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CardContainer } from "./PokemonCard.styled";
 import { Button, Link } from "@chakra-ui/react";
 import Pokebola from "../../assets/pokebola.png";
 import axios from "axios";
 import { typePokemon } from "../../constants/types";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { goToDetailsPage } from "../../routes/coordinator";
 
 const PokemonCard = (props) => {
-  const { pokemonUrl, addToPokedex, removeFromPokedex } = props;
+  const context = useContext(GlobalContext)
+
+  const {pokemonUrl} = props
+
+  const { addToPokedex, removeFromPokedex} = context
 
   const [pokemon, setPokemon] = useState([]);
   const [typesLocal, setTypesLocal] = useState([])
 
   const location = useLocation();
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchPokemon()
@@ -71,9 +78,6 @@ const PokemonCard = (props) => {
   }
 
 
-
-
-
   return (
     <CardContainer
       style={{
@@ -97,7 +101,7 @@ const PokemonCard = (props) => {
 
         </div>
 
-        <Link href="/details" fontSize="16px" textDecoration="underline" justifySelf='flex-end' marginTop='40px'>
+        <Link fontSize="16px" textDecoration="underline" justifySelf='flex-end' marginTop='40px' onClick={() => goToDetailsPage(navigate, pokemon.id)}>
           Detalhes
         </Link>
 
