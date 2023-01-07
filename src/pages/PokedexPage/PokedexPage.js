@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PokemonCard from '../../components/Card/PokemonCard'
 import Header from '../../components/Header/Header'
 import { BASE_URL } from '../../constants/url'
+import { GlobalContext } from '../../contexts/GlobalContext'
 import { CardContainer, Main } from './PokedexPage.styled'
 
-const PokedexPage = (props) => {
+const PokedexPage = () => {
+    const context = useContext(GlobalContext)
+    const {pokedex, removeFromPokedex} = context
 
-    const {pokedex, removeFromPokedex} = props
+    
 
     console.log(pokedex)
   return (

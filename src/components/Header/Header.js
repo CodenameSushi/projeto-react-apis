@@ -1,14 +1,22 @@
 import { Button, Link } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../../assets/PokeLogo.png";
 import { Container } from "./Header.styled";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { goToPokedexPage } from "../../routes/coordinator";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
-const Header = () => {
+const Header = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const params = useParams()
+
+  const context = useContext(GlobalContext)
+
+  const {pokemon} = props
+
+  const { addToPokedex, removeFromPokedex} = context
 
   const renderRightHeader = () => {
     switch (location.pathname) {
@@ -29,11 +37,20 @@ const Header = () => {
       case "/pokedex":
         return <></>;
 
-      case "/details":
+      case `/details/${params.id}`:
         return (
-          <Button colorScheme="red" width="226px" height="57px" fontSize="24px">
+          <>
+          {context.pokedex.includes(params.id) ?
+          
+          <Button colorScheme="red" width="226px" height="57px" fontSize="20px" onClick={() => removeFromPokedex(pokemon)}>
             Excluir da Pokédex
-          </Button>
+          </Button> :
+          <Button colorScheme="blue" width="226px" height="57px" fontSize="20px" onClick={() => addToPokedex(pokemon)}>
+          Adicionar a Pokédex
+        </Button>
+    }
+
+          </>
         );
 
       default:
@@ -57,7 +74,7 @@ const Header = () => {
             Todos Pokemons
           </Link>
         );
-      case "/details":
+      case `/details/${params.id}`:
         return (
           <Link
             href="/"

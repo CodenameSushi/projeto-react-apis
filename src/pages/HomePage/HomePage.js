@@ -1,21 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import PokemonCard from '../../components/Card/PokemonCard'
 import Header from '../../components/Header/Header'
+import { GlobalContext } from '../../contexts/GlobalContext'
 import { CardContainer, Main } from './HomePage.styled'
 
-const HomePage = (props) => {
+const HomePage = () => {
 
-    const {pokelist, pokedex, addToPokedex, removeFromPokedex} = props
+    const context = useContext(GlobalContext)
 
-    console.log(pokedex)
 
-    const filteredPokelist = () =>
-    pokelist.filter(
-      (pokemonInList) =>
-        !pokedex.find(
-          (pokemonInPokedex) => pokemonInList.name === pokemonInPokedex.name
-        )
-    );
+    const {addToPokedex, removeFromPokedex, filteredPokelist} = context
+
+
+
+
+    
 
   return (
     <>
@@ -24,7 +23,7 @@ const HomePage = (props) => {
     <h1>Todos Pokémons</h1>
     <CardContainer>
         {filteredPokelist().map((pokemon) =>(
-            <PokemonCard key={pokemon.url} pokemonUrl={pokemon.url} addToPokedex={addToPokedex} removeFromPokedex={removeFromPokedex} />
+            <PokemonCard key={pokemon.name} pokemonUrl={pokemon.url} addToPokedex={addToPokedex} removeFromPokedex={removeFromPokedex} />
         ))}
 
     </CardContainer>
