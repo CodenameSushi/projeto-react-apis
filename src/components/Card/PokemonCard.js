@@ -94,7 +94,7 @@ const PokemonCard = (props) => {
         <div className="pokemon-type">
 
             {pokemon.types?.map((type) => {
-                return <img src={typePokemon[type.type.name]?.urlImg} alt='pokemon-type' />
+                return <img src={typePokemon[type.type.name]?.urlImg} key={typePokemon.id} alt='pokemon-type' />
             })}
 
 

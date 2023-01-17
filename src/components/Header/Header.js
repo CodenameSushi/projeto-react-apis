@@ -1,6 +1,6 @@
 import { Button, Link } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/PokeLogo.png";
 import { Container } from "./Header.styled";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -16,7 +16,29 @@ const Header = (props) => {
 
   const {pokemon} = props
 
-  const { addToPokedex, removeFromPokedex} = context
+  const {addToPokedex, removeFromPokedex, pokedex} = context
+  const [pokemonFound, setPokemonFound] = useState()
+
+
+function findPokemon(){
+  if(location.pathname === `/details/${params.id}`){
+    const result = pokedex.find((pokemonToFind) => Number(pokemonToFind.id) === Number(params.id))
+    if(result){
+      setPokemonFound(true)
+    }else{
+      setPokemonFound(false)
+    }
+  }
+}
+
+  useEffect(() => {
+    findPokemon()
+  }, [])
+
+
+
+
+
 
   const renderRightHeader = () => {
     switch (location.pathname) {
@@ -40,7 +62,7 @@ const Header = (props) => {
       case `/details/${params.id}`:
         return (
           <>
-          {context.pokedex.includes(params.id) ?
+          {pokemonFound ?
           
           <Button colorScheme="red" width="226px" height="57px" fontSize="20px" onClick={() => removeFromPokedex(pokemon)}>
             Excluir da Pokédex

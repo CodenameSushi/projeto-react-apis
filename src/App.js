@@ -11,9 +11,13 @@ function App() {
   const [pokelist, setPokelist] = useState([]);
   const [pokedex, setPokedex] = useState([]);
   const [pokemonDetails, setPokemonDetails] = useState([]);
+  const [pokemon, setPokemon] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddPokemon, setIsAddPokemon] = useState(true);
 
 
   const addToPokedex = (pokemonToAdd) => {
+    setIsAddPokemon(true)
     const isAlreadyOnPokedex = pokedex.find(
         (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd.name
     )
@@ -25,6 +29,7 @@ function App() {
             console.log("Pokemon adicionado")
             console.log(pokedex)
         }
+        showModal()
   }
 
   const loadPokedexFromLocal = () => {
@@ -37,12 +42,19 @@ function App() {
 
 
   const removeFromPokedex = (pokemonToRemove) => {
+    setIsAddPokemon(false)
+   
     const newPokedex = pokedex.filter(
         (pokemonInPokedex) => pokemonInPokedex.name !== pokemonToRemove.name
     )
+    
         setPokedex(newPokedex)
         const newPokedexStringfy = JSON.stringify(newPokedex)
         window.localStorage.setItem('pokedex', newPokedexStringfy)
+        console.log("Pokemon removido!")
+        showModal()
+        
+       
 
   }
 
@@ -72,6 +84,16 @@ function App() {
     }
   }
 
+  const showModal = () => {
+    setIsModalOpen(true)
+  };
+
+  const closeModal = () => {
+    setIsModalOpen()
+  };
+
+
+
   
 
 
@@ -84,7 +106,16 @@ function App() {
     setPokemonDetails,
     addToPokedex,
     removeFromPokedex,
-    filteredPokelist
+    filteredPokelist,
+    pokemonDetails,
+    setPokemonDetails,
+    pokemon,
+    setPokemon,
+    isModalOpen,
+    setIsModalOpen,
+    isAddPokemon,
+    setIsAddPokemon,
+    closeModal
   }
 
   return (
