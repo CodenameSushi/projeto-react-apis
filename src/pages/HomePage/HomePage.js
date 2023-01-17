@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import PokemonCard from '../../components/Card/PokemonCard'
 import Header from '../../components/Header/Header'
+import Modal from '../../components/Modal/Modal'
 import { GlobalContext } from '../../contexts/GlobalContext'
 import { CardContainer, Main } from './HomePage.styled'
 
@@ -9,7 +10,7 @@ const HomePage = () => {
     const context = useContext(GlobalContext)
 
 
-    const {addToPokedex, removeFromPokedex, filteredPokelist} = context
+    const {addToPokedex, removeFromPokedex, filteredPokelist, isModalOpen} = context
 
 
 
@@ -18,6 +19,7 @@ const HomePage = () => {
 
   return (
     <>
+    {isModalOpen && <Modal/>}
     <Header/>
     <Main>
     <h1>Todos Pokémons</h1>

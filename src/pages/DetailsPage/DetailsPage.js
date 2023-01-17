@@ -1,5 +1,5 @@
 import { Box, Img, Progress, Stack, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
 import { CardDetails, Main, MovesTypes } from './DetailsPage.styled'
 import pokebolaDetails from '../../assets/pokebolaDetails.png'
@@ -7,13 +7,19 @@ import { BASE_URL } from '../../constants/url'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { typePokemon } from '../../constants/types'
+import { GlobalContext } from '../../contexts/GlobalContext'
+import Modal from '../../components/Modal/Modal'
 
 const DetailsPage = () => {
 
-  const [pokemon, setPokemon] = useState([])
+
+  const context = useContext(GlobalContext)
+  
   const [typesLocal, setTypesLocal] = useState([])
 
+ const {pokemon, setPokemon, isModalOpen} = context
   const params = useParams()
+
   
 
   useEffect(()=>{
@@ -61,6 +67,7 @@ const DetailsPage = () => {
 
   return (
     <>
+    {isModalOpen && <Modal/>}
     <Header pokemon={pokemon}/>
     <Main>
     <h1>Detalhes</h1>
